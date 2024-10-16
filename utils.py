@@ -1,5 +1,6 @@
 # utils.py
 
+import os
 import logging
 import random
 import numpy as np
@@ -48,6 +49,9 @@ def setup_logger(
     log_file: str,
     level: int = logging.INFO
 ) -> logging.Logger:
+    if not os.path.exists(os.path.dirname(log_file)):
+        os.makedirs(os.path.dirname(log_file))
+
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
     handler = logging.FileHandler(log_file)
     handler.setFormatter(formatter)

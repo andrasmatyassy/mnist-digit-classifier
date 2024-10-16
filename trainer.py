@@ -89,6 +89,8 @@ class DigitClassifier:
             self.scheduler.step()
 
     def save_model(self, path: str) -> None:
+        if not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
         torch.save(self.model.state_dict(), path)
 
     def load_model(self, path: str) -> None:
