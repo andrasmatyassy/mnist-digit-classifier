@@ -1,0 +1,31 @@
+# config.yaml
+
+paths:
+  train_data: 'data/mnist/mnist_train.csv'
+  test_data: 'data/mnist/mnist_test.csv'
+  custom_data: 'data/mnist_custom'
+  test_logs: 'logs/test.log'
+  train_logs: 'logs/train.log'
+  models: 'models'
+data_loader:
+  batch_size: 64
+  num_workers: 4
+models:
+  - name: 'MnistLinear'
+    epochs: 5
+    dropout_rate: 0.3
+    learning_rate: 0.001
+  - name: 'MnistConv'
+    epochs: 3
+    dropout_rate: 0.3
+    learning_rate: 0.001
+  - name: 'MnistResNet'
+    epochs: 3
+    dropout_rate: 0.3
+    learning_rate: 0.001
+device: 'cuda'  # or 'cpu'
+mode: 
+  train: true
+  test: true
+  save_model: true
+ 
