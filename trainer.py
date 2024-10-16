@@ -21,7 +21,9 @@ class DigitClassifier:
         model: nn.Module,
         device: str = 'cuda',
         learning_rate: float = 1e-3,
+        verbose: bool = True,
     ):
+        self.verbose = verbose
         self.model = model
         self.device = device
         self.loss_fn = nn.CrossEntropyLoss()
@@ -35,7 +37,7 @@ class DigitClassifier:
             gamma=0.95,
         )
 
-    def train(self, dataloader: DataLoader, verbose: bool = True) -> None:
+    def train(self, dataloader: DataLoader) -> None:
         size = len(dataloader.dataset)
         self.model.train()
         for batch, (X, y) in enumerate(dataloader):
@@ -52,10 +54,10 @@ class DigitClassifier:
 
             if batch % 100 == 0:
                 loss, current = loss.item(), (batch + 1) * len(X)
-                if verbose:
+                if self.verbose:
                     print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
-    def test(self, dataloader: DataLoader, verbose: bool = True) -> None:
+    def test(self, dataloader: DataLoader) -> None:
         size = len(dataloader.dataset)
         num_batches = len(dataloader)
         self.model.eval()
@@ -68,7 +70,7 @@ class DigitClassifier:
                 correct += (pred.argmax(1) == y).type(torch.float).sum().item()
         test_loss /= num_batches
         correct /= size
-        if verbose:
+        if self.verbose:
             print(
                 f"Test Error: \n Accuracy: {(100*correct):>0.1f}%,"
                 f" Avg loss: {test_loss:>8f} \n"
@@ -79,13 +81,12 @@ class DigitClassifier:
         train_dataloader: DataLoader,
         test_dataloader: DataLoader,
         epochs: int = 3,
-        verbose: bool = True,
     ) -> None:
         for t in range(epochs):
-            if verbose:
+            if self.verbose:
                 print(f"Epoch {t+1}\n-------------------------------")
-            self.train(train_dataloader, verbose)
-            self.test(test_dataloader, verbose)
+            self.train(train_dataloader)
+            self.test(test_dataloader)
             self.scheduler.step()
 
     def save_model(self, path: str) -> None:

@@ -40,6 +40,7 @@ def main() -> None:
             model,
             device,
             learning_rate=model_config['learning_rate'],
+            verbose=config['verbose'],
         )
 
         model_path = f"{paths['models']}/{model.__class__.__name__}.pth"
@@ -96,6 +97,8 @@ def main() -> None:
                 total_correct,
                 total_samples,
             ))
+            if config['verbose']:
+                print(f'Results saved to {paths["test_logs"]}')
 
 
 if __name__ == "__main__":

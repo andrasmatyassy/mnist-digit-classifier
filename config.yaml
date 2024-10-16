@@ -28,4 +28,5 @@ mode:
   train: true
   test: true
   save_model: true
+verbose: true
  
