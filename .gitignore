@@ -1,0 +1,14 @@
+# .gitignore
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pth
+.venv
+.venv.*
+*.egg-info/
+*.log
+logs/*
+data/mnist/*
+models/*
