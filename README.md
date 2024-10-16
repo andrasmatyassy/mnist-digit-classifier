@@ -54,7 +54,7 @@ While the models perform well on the original MNIST dataset, the performance dro
 | --- | --- | --- |
 | Linear | 0.98 | 0.64 |
 | Convolutional | 0.99 | 0.77 |
-| ResNet | 0.99 | 0.90 |
+| ResNet | 0.99 | 0.91 |
 
 ## License
 
