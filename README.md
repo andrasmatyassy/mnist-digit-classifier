@@ -13,7 +13,7 @@ Additionally, the project includes a small custom dataset of 100 handwritten dig
 1. Clone the repository:
     ```bash
     git clone git@github.com:andrasmatyassy/mnist-digit-classifier.git
-    cd digit_classifier
+    cd mnist-digit-classifier
     ```
 
 2. Create a virtual environment (optional but recommended):
