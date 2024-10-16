@@ -10,5 +10,8 @@ __pycache__/
 *.egg-info/
 *.log
 logs/*
+!logs/.gitignore
 data/mnist/*
+!data/mnist/.gitignore
 models/*
+!models/.gitignore
