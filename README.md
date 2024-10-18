@@ -6,7 +6,7 @@ The **mnist-digit-classifier** is a collection of neural network models—**Line
 
 Instead of utilizing the MNIST dataset from `torchvision.datasets`, this project employs `.csv` files containing digits in the format `label, pixel_1, pixel_2, ... pixel_784` sourced from [Joseph Redmon](https://pjreddie.com/). These `.csv` files are then made into Datasets that are passed to the DataLoaders.
 
-Additionally, the project includes a small custom dataset of 100 handwritten digits in `.png` format, which I collected and annotated. I was curious to see how the models would perform on data with different characteristics (e.g. handwriting style, digital creation) compared to the original MNIST dataset. This custom dataset is normalized and formatted the same way as the original MNIST dataset to ensure uniformity.
+Additionally, the project includes a small custom dataset of 130 digits (inputs were made with a trackpad or a stylus) drawn by 4 different people in `.png` format, which I collected and annotated. I was curious to see how the models would perform on data with different characteristics (e.g. handwriting style, digital creation) compared to the original MNIST dataset. This custom dataset is normalized and formatted the same way as the original MNIST dataset to ensure uniformity.
 
 ## Installation
 
@@ -48,13 +48,13 @@ If `mode.train` is set to `true` in the `config.yaml` file, the models will be t
 
 Final evaluation is done on the custom dataset of handwritten digits. The evaluation of the models is saved to `logs/test.log`.
 
-While the models perform well on the original MNIST dataset, the performance drops significantly on the custom dataset:
+While the models perform well on the original MNIST test dataset, the performance drops significantly when evaluated on the custom dataset:
 
 | Model | Accuracy on MNIST | Accuracy on Custom Dataset |
 | --- | --- | --- |
-| Linear | 0.98 | 0.64 |
-| Convolutional | 0.99 | 0.77 |
-| ResNet | 0.99 | 0.91 |
+| Linear | 0.98 | 0.63 |
+| Convolutional | 0.99 | 0.72 |
+| ResNet | 0.99 | 0.92 |
 
 ## License
 
