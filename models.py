@@ -136,13 +136,13 @@ class MnistResNet(MnistBase):
             # Residual blocks
             ResidualBlock(32, 32),
             ResidualBlock(32, 32),
-            ResidualBlock(32, 64, stride=2),  # This block will reduce spatial dimensions
+            ResidualBlock(32, 64, stride=2),
             ResidualBlock(64, 64),
-            ResidualBlock(64, 128, stride=2),  # This block will reduce spatial dimensions
+            ResidualBlock(64, 128, stride=2),
             ResidualBlock(128, 128),
 
             # Flatten layer
-            nn.AdaptiveAvgPool2d((1, 1)),  # This will adapt to any input size
+            nn.AdaptiveAvgPool2d((1, 1)),
             nn.Flatten(),
 
             # Fully connected layers
@@ -163,28 +163,54 @@ class ResidualBlock(nn.Module):
     Args:
         in_channels (int): Number of input channels.
         out_channels (int): Number of output channels.
-        kernel_size (int, optional): Size of the convolutional kernel. Defaults to 3.
+        kernel_size (int, optional): Size of the convolutional kernel.
+            Defaults to 3.
         stride (int, optional): Stride for the convolution. Defaults to 1.
         padding (int, optional): Padding for the convolution. Defaults to 1.
     """
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, padding=1):
+    def __init__(
+            self,
+            in_channels: int,
+            out_channels: int,
+            kernel_size: int = 3,
+            stride: int = 1,
+            padding: int = 1,
+    ):
         super().__init__()
-        self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding)
+        self.conv1 = nn.Conv2d(
+            in_channels,
+            out_channels,
+            kernel_size,
+            stride,
+            padding,
+        )
         self.bn1 = nn.BatchNorm2d(out_channels)
-        self.relu = nn.ReLU(inplace=True)
-        self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size, 1, padding)
+        self.relu = nn.ReLU()
+        self.conv2 = nn.Conv2d(
+            out_channels,
+            out_channels,
+            kernel_size,
+            1,
+            padding,
+        )
         self.bn2 = nn.BatchNorm2d(out_channels)
 
-        # If the input and output dimensions differ, adjust the input dimensions
+        # If the input and output dimensions differ,
+        # adjust the input dimensions
         if in_channels != out_channels or stride != 1:
             self.adjust = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride),
+                nn.Conv2d(
+                    in_channels,
+                    out_channels,
+                    kernel_size=1,
+                    stride=stride,
+                ),
                 nn.BatchNorm2d(out_channels)
             )
         else:
             self.adjust = nn.Identity()
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         identity = self.adjust(x)
         out = self.relu(self.bn1(self.conv1(x)))
         out = self.bn2(self.conv2(out))
